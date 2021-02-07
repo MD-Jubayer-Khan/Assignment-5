@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section id="all-meals">
+
+        <input type="text" id="search-input" placeholder="It's her choice. Dude">
+        <input type="button" value="Search" id="search-btn" onclick="getAllSearch()">
+
+        <div class="container">
+            <div class="row" id="all-meals-area">
+
+            </div>
+        </div>
+    </section>
+    <section id="search-food">
+
+    </section>
+    <script>
+        const getAllSearch = () => {
+
+            const AllSearch = document.getElementById("search-input").value
+            if (!AllSearch) {
+                document.getElementById("all-meals-area").innerHTML
+            } else {
+
+                document.getElementById("all-meals-area").innerHTML
+
+                fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${AllSearch}`)
+                    .then(Response => Response.json())
+                    .then(data => {
+                        const meals = data.meals
+                        meals.map(element => {
+
+                            const allMeal = document.getElementById("all-meals-area")
+                            const mealContainer = document.createElement("div")
+                            mealContainer.setAttribute("class", "col col-style")
+                            const mealName = element.strMeal
+                            const mealImg = element.strMealThumb
+                            const mealId = element.idMeal
+
+                            const mealArea = `<div class="card card-style" onclick="getmealDetails(${mealId})"  style="width: 14rem;"><img class="card-img-top" src="${mealImg}" alt="Card image cap">
+            <div class="card-body"><h6 class="card-text">${mealName}</h6></div>`
+                            mealContainer.innerHTML = mealArea
+                            allMeal.appendChild(mealContainer)
+                        })
+                    })
+
+            }
+        }
+
+        const getmealDetails = (id) => {
+            fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+                .then(resp => resp.json())
+                .then(data => {
+                    const meal = data.meals
+                    meal.map(element => {
+                        const mealImg = element.strMealThumb
+                        const mealdetailsContainer = document.createElement("div")
+                        const mealdetailsDiv = `<div class="full-body" style="width: 23rem; height:300px">
+                               <img style="width: 500px; height:300px; border-radius:"30px"; margin-top:50px" src="${mealImg}" alt="Card image cap">
+                               <div class="card-body" style="width: 400px;">
+                                 <h4 class="card-title">${element.strMeal}</h4><br>
+                                 <h5>Ingredient</h5>
+                                 <i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient1}</h6><br>
+                                  <i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient2}</h6><br>
+                                 <i class="fas fa-check"></i>  <h6 class="card-text">${element.strIngredient3}</h6><br><i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient4}</h6> <br>
+                                 <i class="fas fa-check"></i>  <h6 class="card-text">${element.strIngredient5}</h6><br><i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient6}</h6><br>
+                                 <i class="fas fa-check"></i>  <h6 class="card-text">${element.strIngredient7}</h6><br>
+                                  <i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient8}</h6><br>
+                                  <i class="fas fa-check"></i> <h6 class="card-text">${element.strIngredient9}</h6>
+                               </div>
+                             </div>`
+
+                        mealdetailsContainer.innerHTML = mealdetailsDiv
+                        document.getElementById("search-food").appendChild(mealdetailsContainer)
+                        document.getElementById("all-meals").style.display = "none"
+                    })
+
+                })
+        }
+    </script>
+</body>
+
+</html>

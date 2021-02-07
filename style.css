@@ -1,0 +1,39 @@
+body {
+    margin-top: 50px;
+}
+
+#search-food {
+    margin-left: 450px;
+}
+
+#search-input {
+    width: 600px;
+    height: 50px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    margin-left: 400px;
+}
+
+#search-input:focus {
+    border: 2px solid tomato;
+}
+
+#search-btn {
+    width: 150px;
+    height: 50px;
+    position: relative;
+    background-color: tomato;
+    font-size: 20px;
+}
+
+.card-body h4 {
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(255, 45, 13);
+}
+
+.card-body h5 {
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(65, 36, 197);
+}
